@@ -56,23 +56,19 @@ export default function request(pathname, options) {
   let object = {}
   let staticPathname = pathname;
 
-  function randomWord(randomFlag, min, max){
-    var str = "",
-        range = min,
-        arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
-    // 随机产生
-    if(randomFlag){
-        range = Math.round(Math.random() * (max-min)) + min;
-    }
-    for(var i=0; i<range; i++){
-        let pos = Math.round(Math.random() * (arr.length-1));
-        str += arr[pos];
-    }
-    return str;
-  }
-  let random=randomWord(true, 3, 32);
+  let random=Math.random().toString(32).substr(2);
   let getTime=()=>parseInt(new Date().getTime()/1000);
+  const headers={
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'token': token,
+
+    'r': random,
+    's': staticPathname,
+    't': getTime(),
+    'ss': SparkMD5.hash(`r=${random}&s=${staticPathname}&t=${getTime()}&key=Yu2f+fo~V$-8CPFI(*ic,~byuT6E~$wa`)
+  }
+
   if (options.method === 'GET') {
     let paramsArray = [];
     //拼接参数
@@ -87,31 +83,13 @@ export default function request(pathname, options) {
 
     object = {
       method: options.method,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'token': token,
-
-        'r': random,
-        's': staticPathname,
-        't': getTime(),
-        'ss': SparkMD5.hash(`r=${random}&s=${staticPathname}&t=${getTime()}&key=Yu2f+fo~V$-8CPFI(*ic,~byuT6E~$wa`)
-      },
+      headers,
     }
   } else {
 
     object = {
       method: options.method,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'token': token,
-
-        'r': random,
-        's': staticPathname,
-        't': getTime(),
-        'ss': SparkMD5.hash(`r=${random}&s=${staticPathname}&t=${getTime()}&key=Yu2f+fo~V$-8CPFI(*ic,~byuT6E~$wa`)
-      },
+      headers,
       body: JSON.stringify(options.body)
     }
   }
