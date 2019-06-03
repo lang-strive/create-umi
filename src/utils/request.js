@@ -53,11 +53,11 @@ function handleErr(data) {
  */
 export default function request(pathname, options) {
   const token = Storage.get('token');
-  let object = {}
-  let staticPathname = pathname;
+  const object = {}
+  const staticPathname = pathname;
 
-  let random=Math.random().toString(32).substr(2);
-  let getTime=()=>parseInt(new Date().getTime()/1000);
+  const random=Math.random().toString(32).substr(2);
+  const getTime=()=>parseInt(new Date().getTime()/1000);
   const headers={
     'Accept': 'application/json',
     'Content-Type': 'application/json',
