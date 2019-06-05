@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { routerRedux } from 'dva/router'
+import { routerRedux ,Link  } from 'dva/router'
 import queryString from "query-string"
 import { Button } from 'antd';
 import styles from './login.less';
@@ -15,7 +15,11 @@ const Login=({login,dispatch})=> {
 
   return (
     <DocumentTitle title="login">
-      <div>login</div>
+      <div>
+        <Link to="/home">
+          <Button>按钮</Button>  
+        </Link>
+      </div>
     </DocumentTitle>
   );
 }
